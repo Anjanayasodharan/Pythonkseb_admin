@@ -46,6 +46,14 @@ while True:
         break
     elif(choice==5):
         print('view all consumer selected')
+        try:
+            sql="SELECT `code`, `name`, `address`, `phno`, `email` FROM `consumer`"
+            mycursor.execute(sql)
+            result=mycursor.fetchall()
+            for i in result :
+                print(i)
+        except mysql.connector.Error as e:
+            sys.exit("view data error")       
         break
     elif(choice==6):
         print('generate bill selected')
