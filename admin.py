@@ -128,6 +128,11 @@ while True:
         mycursor.execute(sql)
         result = mycursor.fetchall()
         print(tabulate(result,headers=['name','address','month','year', 'paid status','billdate','totalunit','bill'],tablefmt = "psql"))
-        
+    elif(choice==8):
+        print('Top 2 high bill')
+        sql = "SELECT * FROM `bill` ORDER BY `bill`DESC LIMIT 2"
+        mycursor.execute(sql)
+        result = mycursor.fetchall()
+        print(tabulate(result,headers=['id', 'User_Id', 'month', 'year', 'bill', 'paid status', 'bill date',  'total_unit','due_date']))   
     elif(choice==9):
         break
