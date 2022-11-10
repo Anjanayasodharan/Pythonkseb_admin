@@ -91,7 +91,29 @@ while True:
         break
     elif(choice==6):
         print('generate bill selected')
-        break
+        code=input("enter the consumer code")
+        sql="SELECT `id` FROM `consumer` WHERE `code`='"+code+"'"
+        mycursor.execute(sql)
+        result=mycursor.fetchall()
+        for i in result:
+            a=i[0]
+            print(a)
+        month=11 
+        year=2022   
+        sql="SELECT SUM(unit) FROM `usages` WHERE `userid`='"+str(a)+"' AND MONTH(datetime)='"+str(month)+"' AND YEAR(datetime)='"+str(year)+"' "
+        mycursor.execute(sql)
+        result=mycursor.fetchone()
+        unit=(result[0])
+        print(result)
+            #print(i)
+        total_bill=int(str(result[0])) * 5
+        print(total_bill)
+        #date= datetime.today().strftime('%Y-%m-%d')
+        sql="INSERT INTO `bill`(`userid`, `month`, `year`, `bill`, `paid status`, `billdate`, `totalunit`) VALUES (%s,%s,%s,%s,%s,now(),%s)"
+        data = (str(a),str(month),str(year),total_bill,'0',unit)
+        mycursor.execute(sql,data)
+        mydb.commit()
+        print("Bill inserted successfully.")
     elif(choice==7):
         print('view bill selected')
         break
