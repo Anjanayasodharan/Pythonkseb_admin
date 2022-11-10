@@ -1,6 +1,7 @@
 import mysql.connector
 import sys
 from datetime import date
+from tabulate import tabulate
 try:
     mydb = mysql.connector.connect(host = 'localhost' , user = 'root' , password = '' , database = 'admindb')
     mycursor = mydb.cursor()
@@ -17,7 +18,8 @@ while True:
     print("5 view all consumer")
     print("6 generate bill")
     print("7 view bill")
-    print("8 exit")
+    print("8 Top 2 high bill")
+    print("9 exit")
     choice = int(input('enter an option:'))
     if(choice==1):
         print('add consumer ')
@@ -121,7 +123,11 @@ while True:
             mydb.commit()
             print("Bill inserted successfully.")
     elif(choice==7):
-        print('view bill selected')
-        break
-    elif(choice==8):
+        print("view the bill which had generated ")
+        sql = "SELECT c.name,c.address, b.`month`, b.`year`, b.`paid status`, b.`billdate`, b.`totalunit`, b.`bill` FROM `bill` b JOIN consumer c ON b.userid=c.id"
+        mycursor.execute(sql)
+        result = mycursor.fetchall()
+        print(tabulate(result,headers=['name','address','month','year', 'paid status','billdate','totalunit','bill'],tablefmt = "psql"))
+        
+    elif(choice==9):
         break
