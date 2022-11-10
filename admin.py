@@ -40,6 +40,14 @@ while True:
         break
     elif(choice==3):
         print('delete consumer selected')
+        code=input("enter the consumer code")
+        try:
+            sql="DELETE FROM `consumer` WHERE `code`="+code
+            mycursor.execute(sql)
+            mydb.commit()
+            print("data updated successfully")
+        except mysql.connector.Error as e:
+            sys.exit("view data error")
         break
     elif(choice==4):
         print('update consumer selected')
